@@ -20,6 +20,10 @@ const App = () => {
    * isLoading, setIsLoading (default should be false)
    */
 
+  const [searchResults, setSearchResults] = useState({info: {}, records: []});
+  const [featuredResult, setFeaturedResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   return <div className="app">
     {/* <Title /> is static, doesn't need any props */}
     <Title />
@@ -38,3 +42,4 @@ const App = () => {
  * Boostrap the <App /> component into the '#app' element in the DOM,
  * using ReactDOM.render();
  */
+ReactDOM.render(<App />, document.getElementById('app'));
