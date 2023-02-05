@@ -5,6 +5,7 @@ import React from 'react';
  * which are query urls.
  */
 import { fetchQueryResultsFromURL } from '../api';
+import Search from './Search';
 
 const Preview = (props) => {
   /**
@@ -14,7 +15,9 @@ const Preview = (props) => {
    * You need info, records, setSearchResults, setFeaturedResult, and setIsLoading as available constants
    */
 
-
+  const {setSearchResults, setFeaturedResult, setIsLoading} = props;
+  const info = props.searchResults;
+  const records = props.searchResults;
   /**
    * Don't touch this function, it's good to go.
    * 
@@ -37,14 +40,14 @@ const Preview = (props) => {
     <header className="pagination">
       {/* This button should be disabled if nothing is set in info.prev, and should call fetchPage with info.prev when clicked */}
       <button 
-        disabled={} 
+        disabled={!info.prev} 
         className="previous"
-        onClick={}>Previous</button>
+        onClick={() => fetchPage(info.prev)}>Previous</button>
       {/* This button should be disabled if nothing is set in info.next, and should call fetchPage with info.next when clicked */}
       <button
-        disabled={}
+        disabled={!info.next}
         className="next"
-        onClick={}>Next</button>
+        onClick={() => fetchPage(info.next)}>Next</button>
     </header>
     <section className="results">
       {
@@ -64,6 +67,22 @@ const Preview = (props) => {
             }
           </div>
         */
+       records.map((record, index) =>
+          <div  
+            key={ index }
+            className="object-preview"
+            onClick={(event) => {
+              // prevent the default
+              // set the featured result to be this record, using setFeaturedResult
+              event.preventDefault();
+              setFeaturedResult(record);
+            }}>
+            { record.primaryimageurl && (
+              <img src={ record.primaryimageurl } alt={ record.description } />
+            )}
+            { record.tite ? <h3>{ record.title }</h3> : <h3>MISSING INFO</h3> }
+          </div>
+       )
       }
     </section>
   </aside>
